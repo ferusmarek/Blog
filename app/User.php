@@ -42,8 +42,16 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Post')->latest('created_at');
 
     }
+    public function roles(){
+        return $this->belongsToMany('App\Role');
+    }
 
-    
+    public function hasRole($role){
+        $role_check = $this->roles->toArray();
+        foreach($role_check as $roles){
+            return $roles['name'] == $role;    }
+            }
+
 
 
 }

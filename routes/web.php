@@ -11,13 +11,9 @@
 |
 */
 
-/*
-Route::get('user/login', 'UserController@getLogin')->name('login');
-Route::get('user/register', [
-	'as'   => 'register',
-	'uses' => 'UserController@getRegister'
-]);*/
-
+Route::get('admin',['middleware'=>'auth:admin',function(){
+    return 'admin dashboard';
+}]);
 
 
 //Route::prefix( '{lang?}' )->middleware( 'locale' )->group( function () {
