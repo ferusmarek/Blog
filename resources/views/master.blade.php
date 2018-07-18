@@ -20,6 +20,7 @@
 		@include('partials.navigation')
 	</header>
 
+
 	<main>
 		<div class="container">
 			@yield('content')
