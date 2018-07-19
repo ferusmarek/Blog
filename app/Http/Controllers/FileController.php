@@ -13,7 +13,7 @@ class FileController extends Controller
         $file = \App\File::findOrFail($id);
 
         return response()->download(
-            storage_path("posts/{$file->post_id}/{$file->filename}")
+            storage_path("posts/{$file->fileable_id}/{$file->filename}")
         );
     }
 

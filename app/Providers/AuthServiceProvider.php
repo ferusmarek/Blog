@@ -34,5 +34,10 @@ class AuthServiceProvider extends ServiceProvider
         {
             return $user->id == $post->user_id;
         });
+        //compare user objects
+        $gate->define('is-user', function($logged_in_user, $user)
+        {
+            return $logged_in_user->id == $user->id;
+        });
     }
 }

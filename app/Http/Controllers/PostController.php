@@ -5,6 +5,7 @@ use App\Post;
 use App\User;
 use App\Tag;
 use App\File;
+use App\Services\UploadService;
 
 use Validator;
 use Illuminate\Http\Request;
@@ -17,6 +18,12 @@ use Excel;
 
 class PostController extends Controller
 {
+    protected $upload;
+
+    public function __construct(UploadService $upload)
+    {
+        $this->upload = $upload;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -134,7 +141,7 @@ class PostController extends Controller
         $post->tags()->sync( $request->get('tags')?:[]);
 
         $this->uploadFiles($post, $request->file('items'));
-        
+
 
 
         // redirect to post
@@ -188,8 +195,8 @@ class PostController extends Controller
 		if ( $files ) foreach ($files as $file)
 		{
 			if ( !$file || !$file->isValid() ) continue;
-            //saveFile sa nachdza vo File modely
-			File::saveFile( $post, $file );
-		}
+            //saveFile sa spusti po uplade, v uploadservice
+            $this->upload->saveFile($post, $file);
+        }
 	}
 }

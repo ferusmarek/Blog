@@ -24,12 +24,13 @@ Route::group(['middleware'=>'auth'],function(){
     //Route::get('tag/{id}', 'TagController@show');
     Route::get('download/{id}/{name}', 'FileController@download');
     Route::get( '/removefile/{id}/{name}/{fileid}', 'FileController@removeFile' );       //remove files from post
+    Route::resource('user','UserController',['only' => ['show','edit','update']]);
 
     //post resource
     Route::resource('post','PostController',['except' => ['show','index']]);
     Route::get('post/{post}/delete',['as' => 'post.delete', 'uses'=> 'PostController@delete']);
     Route::get('post/{slug}',['as' => 'post.show', 'uses'=> 'PostController@show']);
-    Route::get('user/{name}',['as' => 'user.show', 'uses'=> 'UserController@show']);
+    //Route::get('user/{name}',['as' => 'user.show', 'uses'=> 'UserController@show']);
     Route::get('tag/{tags}', [ 'as' => 'tag.show', 'uses' => 'TagController@show' ] );
 	Route::get('export',  'PostController@export' );
 

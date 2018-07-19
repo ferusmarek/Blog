@@ -189,6 +189,12 @@ article.post:last-child {
 	color: #4e5d6c;
 	vertical-align: bottom;
 }
+.user-edit .row{
+	margin-bottom: 35px;
+}
+.user-edit .form-group:last-child {
+	margin-bottom: 0;
+}
 
 .edit-link:hover {
 	color: #df691a;
