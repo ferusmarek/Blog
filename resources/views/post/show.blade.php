@@ -35,7 +35,9 @@
 			</div>
 
 			<footer class="post-footer">
+				@include('partials.files')
 				@include('partials.tags')
+
 
 			</footer>
 		</article>

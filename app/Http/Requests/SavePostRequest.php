@@ -23,10 +23,26 @@ class SavePostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
                 'title' => 'required|max:200',
                 'text'  => 'required',
-                'tags'  => 'array'
-        ];
+                'tags'  => 'array',
+                 ];
+
+        //validacia pre pole hodnot
+        $count= count($this->input('items'))-1;
+        foreach (range(0,$count) as $index) {
+            $rules["items.$index"] = 'mimes:txt,pdf,doc,xls';
+        }
+        return $rules;
+    }
+//validacna message
+    public function messages(){
+        $messages=[];
+        if($this->file('items')){
+        foreach ($this->file('items') as $key => $val) {
+            $messages["items.$key.mimes"]= "All files must be of type: :values";
+        }    }
+        return $messages;
     }
 }

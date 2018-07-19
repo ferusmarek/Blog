@@ -15,7 +15,15 @@
 	/**
 	 * ADD FORM, EDIT FORM
 	 */
-	$('#add-form, #edit-form').find('input[name=title]').moveCursorToEnd();
+	 $('#add-form, #edit-form')
+ 		.find('.add-files a').on('click', function() {
+ 			var input = $(this).prev();
+ 			input.clone().insertAfter(input);
+ 		})
+ 		.end()
+ 		.find('input[name=title]').moveCursorToEnd();
+
+
 
 
 	/**

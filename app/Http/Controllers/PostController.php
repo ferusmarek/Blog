@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use App\Tag;
+use App\File;
+
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -69,6 +71,9 @@ class PostController extends Controller
 
         $post->tags()->sync( $request->get('tags')?:[]);
 
+        // upload files
+		$this->uploadFiles($post, $request->file('items'));
+
         // success message
         flash('hotovo')->success();
 
@@ -123,10 +128,14 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         // update post
-	    $this->authorize('edit-post', $post);
+      $this->authorize('edit-post', $post);
         $post->update( $request->all() );
         // attach tags
         $post->tags()->sync( $request->get('tags')?:[]);
+
+        $this->uploadFiles($post, $request->file('items'));
+        
+
 
         // redirect to post
         flash('Post updated!')->success();
@@ -162,11 +171,25 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
         // if authorized, delete
-	    $this->authorize('edit-post', $post);
+      $this->authorize('edit-post', $post);
         $post->delete();
+
+        // remove files
+       \File::deleteDirectory( storage_path('posts/' . $post->id) );
 
         // redirect home
         flash('Vymazané!')->success();
         return redirect('/');
     }
+
+
+	private function uploadFiles($post, $files)
+	{
+		if ( $files ) foreach ($files as $file)
+		{
+			if ( !$file || !$file->isValid() ) continue;
+            //saveFile sa nachdza vo File modely
+			File::saveFile( $post, $file );
+		}
+	}
 }
