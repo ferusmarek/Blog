@@ -19,6 +19,33 @@
     ]) !!}
 </div>
 
+{{-- Files Field --}}
+@if(isset($post) && $post->files)
+	<ul class="list-group">
+		@foreach( $post->files as $file )
+		    <li class="list-group-item">
+			    <span class="current-attachment"> {{$file->name}}</span>
+			    {{Form::input('text','edit-file-name', $file->name, [ 'id' => $file->id, 'class' => 'attachment-replace', 'style' => 'display:none;'])}}
+			    {{Form::input('hidden','file-id', $file->id)}}
+			    <div class="controls pull-right">
+					<a href="#" class="edit-link current-attachment">edit</a>
+				    <a href="#" class="edit-cancel-link" style="display:none;">cancel</a>
+				    <a href="{!! action('FileController@removeFile',['id' => $post->id, 'name' => $file->filename, 'fileid' => $file->id ]) !!}" class="delete-link glyphicon glyphicon-remove"></a>
+			    </div>
+		    </li>
+		@endforeach
+	</ul>
+@endif
+
+{{-- Add New File Field --}}
+<div class="form-group add-files">
+	{!! Form::file('items[]', ['class' => 'form-control']) !!}
+	<a class="btn btn-default btn-xs pull-right">one more</a>
+</div>
+
+
+
+
 {{-- Tags Field --}}
 <div class="form-group">
     @foreach($tags as $tag)

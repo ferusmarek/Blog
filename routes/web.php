@@ -22,6 +22,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/', 'PostController@index')->name('home');
     //Route::get('user/{id}', 'UserController@show');
     //Route::get('tag/{id}', 'TagController@show');
+    Route::get('download/{id}/{name}', 'FileController@download');
+    Route::get( '/removefile/{id}/{name}/{fileid}', 'FileController@removeFile' );       //remove files from post
 
     //post resource
     Route::resource('post','PostController',['except' => ['show','index']]);

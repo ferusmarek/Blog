@@ -28,6 +28,11 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\File');
+    }
+
     public function getDatetimeAttribute()
 	{
 		return date('Y-m-d', strtotime($this->created_at));
