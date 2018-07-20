@@ -22,6 +22,7 @@ class UserController extends Controller
             ->firstOrFail();
 
         return view('post.index')
+        ->with('user', $user)
         ->with('title', $user->email)
         ->with('posts', $user->posts);
     }

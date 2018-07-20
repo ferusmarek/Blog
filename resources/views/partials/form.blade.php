@@ -1,6 +1,29 @@
 <header class="post-header">
     <h1 class="box-heading">{{$title}}</h1>
+    @if(isset($post))
+        @if($post->cover != 'NULL')
+            <div class="coverimg" style="background-image:url({{asset('coverimg/posts/'.$post->id.'/'.$post->cover)}})">
+        @endif
+    @endif
 </header>
+    {{-- Add New Cover Field --}}
+    <div class="form-group add-files">
+    <h4 id='covertop' class="box-heading">
+        @if(isset($post))
+            @if($post->cover != 'NULL')
+                <label for="cover"><a id="addcover" class="btn btn-deafult btn-xs">change cover</a></label>
+                <small>/</small><a href="{!! action('FileController@removeCover',['id' => $post->id, $post->cover]) !!}"><small class="text-muted">remove Cover</small></a>
+            @else
+                <label for="cover"><a id="addcover" class="btn btn-deafult btn-xs">add cover</a></label>
+            @endif
+        @else
+            <label for="cover"><a id="addcover" class="btn btn-deafult btn-xs">add cover</a></label>
+        @endif
+
+        {!! Form::file('cover', [ 'multiple' => 'multiple', 'class' => 'form-control', 'id' => 'coverImg']) !!}
+        <a href="#" id="resetCover" class="delete-link glyphicon glyphicon-remove"></a>
+    </h4>
+    </div>
 
 {{-- Title Field --}}
 <div class="form-group">
@@ -39,8 +62,9 @@
 
 {{-- Add New File Field --}}
 <div class="form-group add-files">
-	{!! Form::file('items[]', ['class' => 'form-control']) !!}
-	<a class="btn btn-default btn-xs pull-right">one more</a>
+	<div id="dropzone" class="dropzone form-control"></div>
+	{!! Form::file('items[]', [ 'multiple' => 'multiple', 'class' => 'form-control', 'id' => 'fallback']) !!}
+	<a id="OneMore" class="btn btn-deafult btn-xs pull-right">one more</a>
 </div>
 
 

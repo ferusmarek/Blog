@@ -74,20 +74,30 @@ class PostController extends Controller
      */
     public function store(Requests\SavePostRequest $request)
     {
-        $post= Auth::user()->posts()->create($request->all());
+        $post = $this->createPost( $request );
 
-        $post->tags()->sync( $request->get('tags')?:[]);
-
-        // upload files
-		$this->uploadFiles($post, $request->file('items'));
-
-        // success message
         flash('hotovo')->success();
 
         // redirect to post
         return redirect()->route('post.show', $post->slug);
 
     }
+
+    private function createPost( Requests\SavePostRequest $request ) {
+		// create new post for this user
+		$post = Auth::user()->posts()->create( $request->all() );
+
+		// attach tags
+        $post->tags()->sync( $request->get('tags')?:[]);
+
+		// upload files
+		$this->uploadFiles( $post, $request->file( 'items' ) );
+
+		//// upload cover
+		$this->uploadCover( $post, $request->file( 'cover' ) );
+
+		return $post;
+	}
 
     /**
      * Display the specified resource.
@@ -143,7 +153,9 @@ class PostController extends Controller
         $this->uploadFiles($post, $request->file('items'));
 
 
-
+        $this->uploadCover( $post, $request->file( 'cover' ) );
+        //update post
+        $post->update($request->except('cover'));
         // redirect to post
         flash('Post updated!')->success();
         return redirect()->route('post.show', $post->slug);
@@ -198,5 +210,12 @@ class PostController extends Controller
             //saveFile sa spusti po uplade, v uploadservice
             $this->upload->saveFile($post, $file);
         }
+	}
+
+    private function uploadCover( $post, $cover ) {
+
+		if ( $cover ) {
+			$this->upload->saveCover( $post, $cover);
+		}
 	}
 }

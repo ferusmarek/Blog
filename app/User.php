@@ -46,6 +46,38 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Role');
     }
 
+    public function file()
+    {
+        return $this->morphOne('App\File', 'fileable')->latest('created_at');
+    }
+
+    public function getAvatarAttribute()
+    {
+        if ( ! $this->file ) return false;
+
+        return [
+            'full'  => $this->avatarSize(),
+            'crop'  => $this->avatarSize('crop'),
+            'thumb' => $this->avatarSize('thumb'),
+            'tiny'  => $this->avatarSize('tiny'),
+        ];
+    }
+
+
+    private function avatarSize($size = null)
+    {
+        $file = $this->file;
+
+        $path = asset('img/users/'.$file->fileable_id);
+        $filename = $file->filename;
+
+        if ( $size ) {
+            $filename = basename( $file->name, '.'.$file->ext ) . '-' . $size . '.' . $file->ext;
+        }
+
+        return asset( $path.'/'.$filename );
+    }
+
     public function hasRole($role){
         $role_check = $this->roles->toArray();
         foreach($role_check as $roles){

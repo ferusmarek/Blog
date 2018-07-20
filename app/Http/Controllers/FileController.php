@@ -41,4 +41,21 @@ class FileController extends Controller
 		flash()->success("File removed!");
 		return back();
 	}
+
+    	/**
+    	 * @param $id
+    	 *
+    	 * @return \Illuminate\Http\RedirectResponse
+    	 */
+    	public function removeCover( $id, $name) {
+
+    		$cover = Post::findOrFail( $id );
+
+    		$cover->update(['cover' => 'NULL']);
+
+    		\File::delete( public_path('coverimg/posts/'.$id.'/'.$name) );
+
+    		flash()->success("File removed!");
+    		return back();
+    	}
 }
