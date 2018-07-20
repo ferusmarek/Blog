@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use App\Post;
 
 class UploadService
 {
@@ -36,6 +36,37 @@ class UploadService
 
         // add file to db
         return $this->addFileToDatabase( $file, $filename, $model );
+    }
+
+    /**
+     * Save cover to disk
+     *
+     * @param $model
+     * @param $cover
+     *
+     * @return static
+     */
+    public function saveCover( $model, $cover ) {
+        // create new file
+        $dirname = strtolower( class_basename( $model ) ) . 's';
+
+        $filepath = public_path( "coverimg/$dirname/{$model->id}" );
+
+        $extension = $cover->getClientOriginalExtension();
+
+        $filename = str_replace(
+            ".$extension",
+            "-" . rand( 11111, 99999 ) . ".$extension",
+            $cover->getClientOriginalName()
+        );
+
+        //save the file
+        $cover->move( $filepath, $filename );
+
+        $post = Post::find( $model->id);
+        // add cover to db
+        return $post->update(['cover' => $filename]);
+
     }
 
 

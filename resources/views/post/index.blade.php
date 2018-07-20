@@ -3,28 +3,30 @@
 
 @section('content')
     <div class="container">
-    @if(isset($data))
-        <h2 class="box-heading text-muted">Instagram gallery Gallery</h2>
-        <p>Little bit of the instagram gallery for you mate</p>
-        <div class="row">
-            @foreach( $data->data as $links)
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <a href="{{url($links->link)}}">
-                            <img src="{{url($links->images->thumbnail->url)}}" class="img-thumbnail" alt="insta_pic">
-                        </a>
+        @if(isset($data))
+            <h2 class="box-heading text-muted">Instagram gallery Gallery</h2>
+            <p>Little bit of the instagram gallery for you mate</p>
+            <div class="row">
+                @foreach( $data->data as $links)
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{url($links->link)}}">
+                                <img src="{{url($links->images->thumbnail->url)}}" class="img-thumbnail" alt="insta_pic">
+                            </a>
+                        </div>
                     </div>
                 </div>
-        </div>
             @endforeach
-            @endif
+        @endif
     </div>
 
     <section class="box post-list">
         <h1 class="box-heading text-muted">
-{{ $title or 'this is a blog' }}
-            </h1>
-
+            @if (isset($user)&& $user->avatar)
+                <img src="{{ $user->avatar['tiny'] }}" alt="{{ $user->name }}">
+            @endif
+            {{ $title or 'this is a blog' }}
+        </h1>
         @forelse ($posts as $post)
             <article id="post-{{ $post->id }}" class="post">
                 <header class="post-header">
@@ -36,7 +38,6 @@
                         </time>
                     </h2>
                     @include('partials.tags')
-
                 </header>
                 <div class="post-content">
                     <p>

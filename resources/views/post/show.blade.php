@@ -10,8 +10,11 @@
 			@include('flash::message')
 
 			<header class="post-header">
+				@if(!($post->cover == 'NULL'))
+						<div class="coverimg" style="background-image:url({{asset('coverimg/posts/'.$post->id.'/'.$post->cover)}})"></div>
+				@endif
 				<h1 class="box-heading">
-					<a href="{{ URL::current() }}">{{ $post->title }}</a>
+					<a href="{{route('post.show', [$post->id, $post->slug])}}">{{ $post->title }}</a>
 
 					@can('edit-post', $post)
 						<a href="{{ route('post.edit',$post->id) }}" class="btn btn-xs edit-link">edit</a>

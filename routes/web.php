@@ -24,6 +24,8 @@ Route::group(['middleware'=>'auth'],function(){
     //Route::get('tag/{id}', 'TagController@show');
     Route::get('download/{id}/{name}', 'FileController@download');
     Route::get( '/removefile/{id}/{name}/{fileid}', 'FileController@removeFile' );       //remove files from post
+    Route::get( '/removecover/{id}/{filename}', 'FileController@removeCover' );            //remove cover from post
+
     Route::resource('user','UserController',['only' => ['show','edit','update']]);
 
     //post resource

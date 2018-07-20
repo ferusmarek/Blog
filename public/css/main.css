@@ -23,6 +23,21 @@ header .alert {
 	font-weight: bold !important;
 }
 
+.cover{
+	padding-top: 20%;
+	color: rgb(255, 255, 255);
+	position: relative;
+	min-width: auto;
+	min-height: 300px;
+	background-repeat: no-repeat;
+	background-color: #222222;
+	background-size: cover;
+	background-position: center;
+	background-attachment: scroll;
+}
+
+
+
 
 /**
  * header
