@@ -169,6 +169,12 @@ article.post:last-child {
 	margin-bottom: 0;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+
 .post .box-heading,
 .post-list .box-heading {
 	border-bottom: 1px dashed #dedede;
@@ -193,6 +199,14 @@ article.post:last-child {
 	display: block;
 }
 
+.user-edit .row {
+	margin-bottom: 35px;
+}
+
+.user-edit .form-group:last-child {
+	margin-bottom: 0;
+}
+
 .post-footer .tags {
 	border-top: 1px dashed #dedede;
 	padding-top: 20px;
@@ -204,12 +218,6 @@ article.post:last-child {
 	color: #4e5d6c;
 	vertical-align: bottom;
 }
-.user-edit .row{
-	margin-bottom: 35px;
-}
-.user-edit .form-group:last-child {
-	margin-bottom: 0;
-}
 
 .edit-link:hover {
 	color: #df691a;
@@ -218,6 +226,44 @@ article.post:last-child {
 .written-by {
 	color: #afafaf;
 }
+
+
+/**
+ * comments
+ */
+
+.comments {
+	list-style: none;
+	padding-left: 0;
+	margin-top: 50px;
+}
+
+.comments li {
+	overflow: hidden;
+	margin-bottom: 5px;
+	vertical-align: top;
+}
+
+.comments p {
+	font-size: 95%;
+}
+
+.comments small {
+	color: #afafaf;
+}
+
+.comments img {
+	width: 60px;
+	float: left;
+	position: relative;
+	top: 3px;
+}
+
+.comments p,
+.comments header {
+	padding-left: 70px;
+}
+
 
 
 

@@ -40,6 +40,8 @@
 			<footer class="post-footer">
 				@include('partials.files')
 				@include('partials.tags')
+				@include('partials.discussion')
+
 
 
 			</footer>

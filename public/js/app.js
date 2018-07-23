@@ -33,6 +33,41 @@
 		return confirm('for sure?');
 	});
 
+	/**
+	 * discussion
+	 */
+	 var discussion = $('#discussion');
+	 discussion.find('form').on('submit', function(event) {
+
+		 var form = $(this);
+
+		 var req = $.ajax({
+			 url: form.attr('action'),
+			 type: 'post',
+			 data: form.serialize()
+		 });
+
+		 req.done(function(data) {
+
+			 $.ajax({
+				 url: 'comment/' + data.id,
+				 type: 'get',
+				 success: function(html) {
+					 var li = $(html).hide();
+					 discussion.find('.comments').append(li);
+					 li.fadeIn();
+				 }
+			 });
+
+		 });
+
+		 form.find('textarea').val('').focus();
+
+		 event.preventDefault();
+
+	 });
+
+
 
 	/**
 	 * Hide alerts

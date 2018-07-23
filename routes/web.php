@@ -22,17 +22,23 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/', 'PostController@index')->name('home');
     //Route::get('user/{id}', 'UserController@show');
     //Route::get('tag/{id}', 'TagController@show');
-    Route::get('download/{id}/{name}', 'FileController@download');
+    //  Route::get('download/{id}/{name}', 'FileController@download');
+    //  file
     Route::get( '/removefile/{id}/{name}/{fileid}', 'FileController@removeFile' );       //remove files from post
     Route::get( '/removecover/{id}/{filename}', 'FileController@removeCover' );            //remove cover from post
-
+    //user
     Route::resource('user','UserController',['only' => ['show','edit','update']]);
+
+    //comment
+    Route::resource('post/comment','CommentController',['only' => ['show','store']]);
+
 
     //post resource
     Route::resource('post','PostController',['except' => ['show','index']]);
     Route::get('post/{post}/delete',['as' => 'post.delete', 'uses'=> 'PostController@delete']);
     Route::get('post/{slug}',['as' => 'post.show', 'uses'=> 'PostController@show']);
     //Route::get('user/{name}',['as' => 'user.show', 'uses'=> 'UserController@show']);
+    //tag
     Route::get('tag/{tags}', [ 'as' => 'tag.show', 'uses' => 'TagController@show' ] );
 	Route::get('export',  'PostController@export' );
 

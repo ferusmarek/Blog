@@ -28,6 +28,11 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
     public function files()
     {
         return $this->morphMany('App\File', 'fileable');
